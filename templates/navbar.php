@@ -16,7 +16,7 @@
       <ul class="nav navbar-nav">
         <li class=""><a href="index.php">Services <span class="sr-only">(current)</span></a></li>
         <?php if ($_SESSION['user']['rights'] == 1): ?>
-          <li class=""><a href="index.php">Admin <span class="sr-only">(current)</span></a></li>
+          <li class=""><a href="admin.php">Admin <span class="sr-only">(current)</span></a></li>
         <?php endif; ?>
         <!-- <li><a href="#">Link</a></li> -->
         <!-- <li class="dropdown">

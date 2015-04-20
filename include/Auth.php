@@ -497,6 +497,13 @@
   	}
 
 
+    public function isAdmin() {
+      if (!isset($_SESSION['user'])) return false;
+      if ($_SESSION['user']['rights'] == 1) return true;
+      return false;
+    }
+
+
     /*
   	* Function to check if a session is valid
   	* @param string $hash
