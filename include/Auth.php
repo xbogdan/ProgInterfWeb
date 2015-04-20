@@ -1,6 +1,8 @@
 <?php
 
   class Auth {
+    private $user = null;
+
     public function __construct(\PDO $dbh, $config=null)
     {
       $this->dbh = $dbh;
@@ -52,6 +54,7 @@
   		}
 
   		$user = $this->getUser($uid);
+      $this->user = $user;
 
   		if (!password_verify($password, $user['password'])) {
 
@@ -76,6 +79,8 @@
       $_SESSION['user']['uid'] = $user['uid'];
       $_SESSION['user']['email'] = $user['email'];
       $_SESSION['user']['rights'] = $user['rights'];
+      $_SESSION['user']['name'] = $user['name'];
+      $_SESSION['user']['phone'] = $user['phone'];
 
       return $return;
   	}
@@ -222,7 +227,8 @@
 
   	public function getUser($uid)
   	{
-  		$query = $this->dbh->prepare("SELECT password, email, salt, isactive, rights FROM {$this->config->table_users} WHERE id = ?");
+      if ($this->user != null) return $this->user;
+  		$query = $this->dbh->prepare("SELECT password, email, salt, isactive, rights, name, phone FROM {$this->config->table_users} WHERE id = ?");
   		$query->execute(array($uid));
 
   		if ($query->rowCount() == 0) {
@@ -240,13 +246,19 @@
   	}
 
 
+    public function getSignedInUser()
+    {
+      return $_SESSION['user'];
+    }
+
   	/*
   	* Verifies that a password is valid and respects security requirements
   	* @param string $password
   	* @return array $return
   	*/
 
-  	private function validatePassword($password) {
+  	private function validatePassword($password)
+    {
   		$return['error'] = 1;
 
   		if (strlen($password) < 6) {
@@ -271,7 +283,8 @@
   	* @return array $return
   	*/
 
-  	private function validateEmail($email) {
+  	private function validateEmail($email)
+    {
   		$return['error'] = 1;
 
   		if (strlen($email) < 5) {
@@ -497,7 +510,8 @@
   	}
 
 
-    public function isAdmin() {
+    public function isAdmin()
+    {
       if (!isset($_SESSION['user'])) return false;
       if ($_SESSION['user']['rights'] == 1) return true;
       return false;
@@ -564,5 +578,18 @@
 
   		return false;
   	}
+
+
+    function updateUser($user)
+    {
+      $query = $this->dbh->prepare('UPDATE users SET email = ?, name = ?, phone = ? WHERE id = ?');
+      if ($query->execute(array($user['email'], $user['name'], $user['phone'], $_SESSION['user']['uid']))) {
+        $_SESSION['user']['name'] = $user['name'];
+        $_SESSION['user']['email'] = $user['email'];
+        $_SESSION['user']['phone'] = $user['phone'];
+        return true;
+      }
+      return false;
+    }
 
   }

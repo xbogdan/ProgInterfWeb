@@ -12,6 +12,25 @@
   }
 
   $alert = null;
+
+  if (isset($_POST['user-name']) && isset($_POST['user-email']) && isset($_POST['user-phone'])) {
+    if (empty($_POST['user-name']) || empty($_POST['user-email']) || empty($_POST['user-phone'])) {
+      $alert['type'] = 'error';
+      $alert['message'] = 'Please complete all fields below.';
+    } else {
+      $user = array();
+      $user['name'] = $_POST['user-name'];
+      $user['email'] = $_POST['user-email'];
+      $user['phone'] = $_POST['user-phone'];
+      if ($_auth->updateUser($user)) {
+        $alert['type'] = 'success';
+        $alert['message'] = 'Successfully updated your account informations.';
+      } else {
+        $alert['type'] = 'error';
+        $alert['message'] = 'Error ocurred while updating your account informations.';
+      }
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html>
@@ -27,25 +46,27 @@
     <?php require 'templates/navbar.php'; ?>
     <?php showAlert($alert); ?>
 
-    <h2>My account</h2>
-    
-    <div class="row">
-      <div class="col-xs-12 col-md-4 col-lg-4">
-        <form class="" action="index.html" method="post">
-          <div class="form-group">
-            <label for="">Name</label>
-            <input type="text" name="user-name" class="form-control" value="" placeholder="Full name">
-          </div>
-          <div class="form-group">
-            <label for="">Phone</label>
-            <input type="text" name="user-phone" class="form-control" value="" placeholder="Phone number">
-          </div>
-          <div class="form-group">
-            <label for="">Email</label>
-            <input type="text" name="user-email" class="form-control" value="" placeholder="Email address">
-          </div>
-          <button type="submit" class="btn btn-default">Update</button>
-        </form>
+    <div class="container">
+      <h2>My account</h2>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+          <form class="" action="myaccount.php" method="POST">
+            <div class="form-group">
+              <label for="">Name</label>
+              <input type="text" name="user-name" class="form-control" value="<?= $_auth->getSignedInUser()['name'] ?>" placeholder="Full name">
+            </div>
+            <div class="form-group">
+              <label for="">Phone</label>
+              <input type="text" name="user-phone" class="form-control" value="<?= $_auth->getSignedInUser()['phone'] ?>" placeholder="Phone number">
+            </div>
+            <div class="form-group">
+              <label for="">Email</label>
+              <input type="text" name="user-email" class="form-control" value="<?= $_auth->getSignedInUser()['email'] ?>" placeholder="Email address">
+            </div>
+            <button type="submit" class="btn btn-default">Update</button>
+          </form>
+        </div>
       </div>
     </div>
 
