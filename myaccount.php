@@ -28,23 +28,25 @@
     <?php showAlert($alert); ?>
 
     <h2>My account</h2>
-
-    <div class="col-xs-12 col-md-4 col-lg-4">
-      <form class="" action="index.html" method="post">
-        <div class="form-group">
-          <label for="">Name</label>
-          <input type="text" name="user-name" class="form-control" value="" placeholder="Full name">
-        </div>
-        <div class="form-group">
-          <label for="">Phone</label>
-          <input type="text" name="user-phone" class="form-control" value="" placeholder="Phone number">
-        </div>
-        <div class="form-group">
-          <label for="">Email</label>
-          <input type="text" name="user-email" class="form-control" value="" placeholder="Email address">
-        </div>
-        <button type="submit" class="btn btn-default">Update</button>
-      </form>
+    
+    <div class="row">
+      <div class="col-xs-12 col-md-4 col-lg-4">
+        <form class="" action="index.html" method="post">
+          <div class="form-group">
+            <label for="">Name</label>
+            <input type="text" name="user-name" class="form-control" value="" placeholder="Full name">
+          </div>
+          <div class="form-group">
+            <label for="">Phone</label>
+            <input type="text" name="user-phone" class="form-control" value="" placeholder="Phone number">
+          </div>
+          <div class="form-group">
+            <label for="">Email</label>
+            <input type="text" name="user-email" class="form-control" value="" placeholder="Email address">
+          </div>
+          <button type="submit" class="btn btn-default">Update</button>
+        </form>
+      </div>
     </div>
 
   </body>
