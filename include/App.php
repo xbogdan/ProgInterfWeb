@@ -17,7 +17,7 @@
     * Get list of all available services
     */
     public function getServices() {
-      $query = $this->dbh->prepare("SELECT *, s.date AS 'service_date', s.description AS 'service_description', s.id AS 'service_id', s.name AS 'service_name', st.name AS 'service_type_name', c.name AS 'company_name' FROM {$this->config->table_services} AS s, {$this->config->table_services_types} AS st, {$this->config->table_companies} AS c WHERE s.service_type_id = st.id AND s.company_id = c.id AND active");
+      $query = $this->dbh->prepare("SELECT *, s.id AS 'service_id', s.date AS 'service_date', s.description AS 'service_description', s.id AS 'service_id', s.name AS 'service_name', st.name AS 'service_type_name', c.name AS 'company_name', c.id AS 'company_id', st.id AS 'service_type_id' FROM {$this->config->table_services} AS s, {$this->config->table_services_types} AS st, {$this->config->table_companies} AS c WHERE s.service_type_id = st.id AND s.company_id = c.id AND active");
   		$query->execute();
       return $services = $query->fetchAll();
     }
@@ -27,7 +27,7 @@
     * Get service by id
     */
     public function getService($id) {
-      $query = $this->dbh->prepare("SELECT *, s.id AS 'service_id', s.description AS 'service_description', s.name AS 'service_name', st.name AS 'service_type_name', c.name AS 'company_name' FROM {$this->config->table_services} AS s, {$this->config->table_services_types} AS st, {$this->config->table_companies} AS c WHERE s.service_type_id = st.id AND s.company_id = c.id AND s.id = ?");
+      $query = $this->dbh->prepare("SELECT *, s.id AS 'service_id', s.date AS 'service_date', s.description AS 'service_description', s.id AS 'service_id', s.name AS 'service_name', st.name AS 'service_type_name', c.name AS 'company_name', c.id AS 'company_id', st.id AS 'service_type_id' FROM {$this->config->table_services} AS s, {$this->config->table_services_types} AS st, {$this->config->table_companies} AS c WHERE s.service_type_id = st.id AND s.company_id = c.id AND s.id = ?");
   		$query->execute(array($id));
       return $services = $query->fetch();
     }
@@ -99,6 +99,25 @@
         $service['type'],
         $service['price'],
         $service['description']
+      ));
+    }
+
+
+    /*
+    * Update service types
+    */
+    public function updateService($service) {
+      $query = $this->dbh->prepare("UPDATE {$this->config->table_services} SET name = ?, from_location = ?, to_location = ?, date = ?, company_id = ?, service_type_id = ?, unit_price = ?, description = ? WHERE id = ?");
+      return $query->execute(array(
+        $service['name'],
+        $service['from'],
+        $service['to'],
+        $service['date'],
+        $service['company_id'],
+        $service['type'],
+        $service['price'],
+        $service['description'],
+        $service['id']
       ));
     }
 

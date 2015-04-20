@@ -50,10 +50,10 @@
   </head>
   <body>
     <?php require 'templates/navbar.php'; ?>
-    <?php showAlert($alert); ?>
 
 
     <div class="container">
+      <?php showAlert($alert); ?>
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-md-12">
           <h2>Admin Panel</h2>
@@ -66,6 +66,8 @@
                 <th>Name</th>
                 <th>About</th>
                 <th>Company</th>
+                <th>From</th>
+                <th>To</th>
                 <th>Date</th>
                 <th>Description</th>
                 <th>Price</th>
@@ -80,15 +82,18 @@
                     <td><?= $s['service_name'] ?></td>
                     <td><?= $s['service_type_name'] ?></td>
                     <td><?= $s['company_name'] ?></td>
+                    <td><?= $s['from_location'] ?></td>
+                    <td><?= $s['to_location'] ?></td>
                     <td><?= $s['service_date'] ?></td>
                     <td><?= $s['service_description'] ?></td>
                     <td><?= $s['unit_price'].' '.$s['currency'] ?></td>
                     <td>
-                      <form class="form-inline inline-block" action="admin.php" method="POST" style="margin-bottom: 0">
+                      <a href="editservice.php?service=<?= $s['service_id'] ?>" class="btn btn-primary btn-xs">Edit</a>
+                      <!-- <form class="form-inline inline-block" action="admin.php" method="POST" style="margin-bottom: 0">
                         <input type="hidden" name="action" value="1">
                         <input type="hidden" name="service_id" value="<?= $s['service_id'] ?>">
                         <button type="submit" class="btn btn-primary btn-xs">Edit</button>
-                      </form>
+                      </form> -->
                       <form class="form-inline inline-block" action="admin.php" method="POST" style="margin-bottom: 0">
                         <input type="hidden" name="action" value="-1">
                         <input type="hidden" name="service_id" value="<?= $s['service_id'] ?>">
