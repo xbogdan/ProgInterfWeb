@@ -52,47 +52,56 @@
     <?php require 'templates/navbar.php'; ?>
     <?php showAlert($alert); ?>
 
-    <a href="addservice.php" class="btn btn-success">Add new service</a><br><br>
 
-    <table class="table table-condensed table-striped">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>About</th>
-          <th>Company</th>
-          <th>Date</th>
-          <th>Description</th>
-          <th>Price</th>
-          <th></th>
-        </tr>
-      </thead>
-      <?php
-        $_app = new App(db());
-        $services = $_app->getServices();
-        foreach ($services as $key => $s):?>
-            <tr>
-              <td><?= $s['service_name'] ?></td>
-              <td><?= $s['service_type_name'] ?></td>
-              <td><?= $s['company_name'] ?></td>
-              <td><?= $s['service_date'] ?></td>
-              <td><?= $s['service_description'] ?></td>
-              <td><?= $s['unit_price'].' '.$s['currency'] ?></td>
-              <td>
-                <form class="form-inline inline-block" action="admin.php" method="POST" style="margin-bottom: 0">
-                  <input type="hidden" name="action" value="1">
-                  <input type="hidden" name="service_id" value="<?= $s['service_id'] ?>">
-                  <button type="submit" class="btn btn-primary btn-xs">Edit</button>
-                </form>
-                <form class="form-inline inline-block" action="admin.php" method="POST" style="margin-bottom: 0">
-                  <input type="hidden" name="action" value="-1">
-                  <input type="hidden" name="service_id" value="<?= $s['service_id'] ?>">
-                  <button type="submit" class="btn btn-danger btn-xs">Delete</button>
-                </form>
-              </td>
-            </tr>
-      <?php
-        endforeach;
-      ?>
-    </table>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-md-12">
+          <h2>Admin Panel</h2>
+
+          <a href="addservice.php" class="btn btn-success fright">Add new service</a>
+
+          <table class="table table-condensed table-striped clear">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>About</th>
+                <th>Company</th>
+                <th>Date</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th></th>
+              </tr>
+            </thead>
+            <?php
+              $_app = new App(db());
+              $services = $_app->getServices();
+              foreach ($services as $key => $s):?>
+                  <tr>
+                    <td><?= $s['service_name'] ?></td>
+                    <td><?= $s['service_type_name'] ?></td>
+                    <td><?= $s['company_name'] ?></td>
+                    <td><?= $s['service_date'] ?></td>
+                    <td><?= $s['service_description'] ?></td>
+                    <td><?= $s['unit_price'].' '.$s['currency'] ?></td>
+                    <td>
+                      <form class="form-inline inline-block" action="admin.php" method="POST" style="margin-bottom: 0">
+                        <input type="hidden" name="action" value="1">
+                        <input type="hidden" name="service_id" value="<?= $s['service_id'] ?>">
+                        <button type="submit" class="btn btn-primary btn-xs">Edit</button>
+                      </form>
+                      <form class="form-inline inline-block" action="admin.php" method="POST" style="margin-bottom: 0">
+                        <input type="hidden" name="action" value="-1">
+                        <input type="hidden" name="service_id" value="<?= $s['service_id'] ?>">
+                        <button type="submit" class="btn btn-danger btn-xs">Delete</button>
+                      </form>
+                    </td>
+                  </tr>
+            <?php
+              endforeach;
+            ?>
+          </table>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
