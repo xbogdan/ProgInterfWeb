@@ -17,7 +17,7 @@
     * Get list of all available services
     */
     public function getServices() {
-      $query = $this->dbh->prepare("SELECT *, s.date AS 'service_date', s.description AS 'service_description', s.id AS 'service_id', s.name AS 'service_name', st.name AS 'service_type_name', c.name AS 'company_name' FROM {$this->config->table_services} AS s, {$this->config->table_services_type} AS st, {$this->config->table_companies} AS c WHERE s.service_type_id = st.id AND s.company_id = c.id");
+      $query = $this->dbh->prepare("SELECT *, s.date AS 'service_date', s.description AS 'service_description', s.id AS 'service_id', s.name AS 'service_name', st.name AS 'service_type_name', c.name AS 'company_name' FROM {$this->config->table_services} AS s, {$this->config->table_services_type} AS st, {$this->config->table_companies} AS c WHERE s.service_type_id = st.id AND s.company_id = c.id AND active");
   		$query->execute();
       return $services = $query->fetchAll();
     }
@@ -47,13 +47,22 @@
 
 
     /*
-    *
+    * Get users reservations
     */
     public function getReservations($user_id) {
       $query = $this->dbh->prepare("SELECT *, s.name AS 'service_name', s.description AS 'service_description', st.name AS 'service_type_name', c.name AS 'company_name' FROM {$this->config->table_reservations} AS r, {$this->config->table_services} AS s, {$this->config->table_services_type} AS st, {$this->config->table_companies} AS c WHERE r.service_id = s.id AND c.id = s.company_id AND s.service_type_id = st.id AND user_id = ?");
       $query->execute(array($user_id));
 
       return $query->fetchAll();
+    }
+
+
+    /*
+    * Delete service
+    */
+    public function deleteService($id) {
+      $query = $this->dbh->prepare("UPDATE {$this->config->table_services} SET active = 0 WHERE id = ?");
+      return $query->execute(array($id));
     }
 
   }

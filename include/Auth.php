@@ -510,6 +510,9 @@
   	}
 
 
+    /*
+    * Check if current user is admin
+    */
     public function isAdmin()
     {
       if (!isset($_SESSION['user'])) return false;
@@ -580,6 +583,9 @@
   	}
 
 
+    /*
+    * Update user account informations
+    */
     function updateUser($user)
     {
       $query = $this->dbh->prepare('UPDATE users SET email = ?, name = ?, phone = ? WHERE id = ?');

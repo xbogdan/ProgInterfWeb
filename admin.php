@@ -13,6 +13,30 @@
   if (!$_auth->isAdmin()) header('Location: index.php');
 
   $alert = null;
+
+  if (isset($_POST['action'])) {
+    if (empty($_POST['service_id'])) {
+      $alert['type'] = 'error';
+      $alert['message'] = 'Invalid service id.';
+    } else {
+      $_app = new App(db());
+      switch ((int)$_POST['action']) {
+        case -1:
+          if ($_app->deleteService($_POST['service_id'])) {
+            $alert['type'] = 'success';
+            $alert['message'] = 'Success.';
+          } else {
+            $alert['type'] = 'error';
+            $alert['message'] = 'Error ocurred.';
+          }
+          break;
+
+        case 1:
+          # code...
+          break;
+      }
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html>
@@ -56,7 +80,6 @@
               <td>
                 <form class="form-inline inline-block" action="admin.php" method="POST" style="margin-bottom: 0">
                   <input type="hidden" name="action" value="1">
-                  <input type="number" name="quantity" value="1" style="width: 40px; text-align: center; font-size: 12px; line-height: 1" min="1">
                   <input type="hidden" name="service_id" value="<?= $s['service_id'] ?>">
                   <button type="submit" class="btn btn-primary btn-xs">Edit</button>
                 </form>
