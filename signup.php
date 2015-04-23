@@ -1,17 +1,25 @@
 <?php
   require 'config.php';
+  require 'include/functions.php';
   require 'include/Auth.php';
 
   $_auth = new Auth(db());
 
+  $alert = null;
+
   if ($_auth->checkSession()) header('Location: index.php');
 
-  if (!empty($_POST['email']) && !empty($_POST['passwd']) && !empty($_POST['conf-passwd'])) {
+  if (isset($_POST['email']) && isset($_POST['passwd']) && isset($_POST['conf-passwd'])) {
     $response = $_auth->register($_POST['email'], $_POST['passwd'], $_POST['conf-passwd']);
     if ($response['error'] == 1) {
-      echo 'Error registering new user';
+      $alert['type'] = 'error';
+      echo $response['message'];
+      $alert['message'] = $_auth->getErrorMessage($response['message']);
     } else {
-      echo 'Successfully registered';
+      $_auth->login($_POST['email'], $_POST['passwd']);
+      // $alert['type'] = 'success';
+      // $alert['message'] = 'Successfully registered. Please wait.';
+      header('Location: index.php');
     }
   }
 ?>
@@ -27,6 +35,7 @@
   <body>
 
     <div class="container">
+      <?php showAlert($alert); ?>
       <div id="signupbox" style="margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <div class="panel panel-info">
           <div class="panel-heading">

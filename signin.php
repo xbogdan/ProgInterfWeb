@@ -1,5 +1,6 @@
 <?php
   require 'config.php';
+  require 'include/functions.php';
   require 'include/Auth.php';
 
   $_auth = new Auth(db());
@@ -11,14 +12,15 @@
     if (!empty($_POST['remember'])) $remember = $_POST['remember'];
     $response = $_auth->login($_POST['email'], $_POST['passwd'], $remember);
     if ($response['error'] == 1) {
-      echo 'Error login new user';
+      $alert['type'] = 'success';
+      $alert['message'] = $_auth->getErrorMessage($response['message']);
+      // echo 'Error login new user';
     } else {
       if (!empty($_SESSION['redirect'])) {
         header('Location: '.$_SESSION['redirect']);
       } else {
         header('Location: index.php');
       }
-      echo 'Successfully login';
     }
   }
 ?>
@@ -35,6 +37,7 @@
   <body>
 
     <div class="container">
+      <?php showAlert($alert); ?>
       <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <div class="panel panel-info" >
           <div class="panel-heading">

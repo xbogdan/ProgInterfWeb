@@ -87,7 +87,8 @@
 
 
     function logout() {
-      session_unset();
+      // session_unset();
+      session_destroy();
     }
 
 
@@ -136,6 +137,67 @@
   		return $return;
   	}
 
+
+    public function getErrorMessage($message) {
+      switch ($message) {
+        case 'password_nomatch':
+          return 'Passwords don\'t match.';
+          break;
+
+        case 'email_taken':
+          return 'Email is taken.';
+          break;
+
+        case 'email_invalid':
+          return 'Email is not valid.';
+          break;
+
+        case 'register_success':
+          return 'Successfully registered.';
+          break;
+
+        case 'email_password_incorrect':
+          return 'Email or password incorrect.';
+          break;
+
+        case 'email_password_invalid':
+          return 'Email or password incorrect.';
+          break;
+
+        case 'password_short':
+          return 'Password too short.';
+          break;
+
+        case 'logged_in':
+          return 'Logged in.';
+          break;
+
+        case 'system_error':
+          return 'System error please try again later.';
+          break;
+
+        case 'email_long':
+          return 'Email too long.';
+          break;
+
+        case 'email_short':
+          return 'Email too short.';
+          break;
+
+        case 'password_long':
+          return 'Password too long.';
+          break;
+
+        case 'password_short':
+          return 'Password too short.';
+          break;
+
+
+        default:
+          # code...
+          break;
+      }
+    }
 
     // public function logout($hash)
     // {
