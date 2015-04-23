@@ -40,15 +40,21 @@
       </form> -->
       <ul class="nav navbar-nav navbar-right">
         <li class=""><a href="contact.php">Contact <span class="sr-only">(current)</span></a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="myaccount.php">My account</a></li>
-            <li><a href="myreservations.php">My reservations</a></li>
-            <li class="divider"></li>
-            <li><a href="signout.php">Sign out</a></li>
-          </ul>
-        </li>
+        <?php
+        if ($_auth->checkSession()) {
+          ?>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="myaccount.php">My account</a></li>
+              <li><a href="myreservations.php">My reservations</a></li>
+              <li class="divider"></li>
+              <li><a href="signout.php">Sign out</a></li>
+            </ul>
+          </li>
+          <?php
+        }
+        ?>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

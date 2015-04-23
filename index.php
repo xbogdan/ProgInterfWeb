@@ -5,14 +5,13 @@
   require 'include/App.php';
 
   $_auth = new Auth(db());
-  if (!$_auth->checkSession()) {
-    setRedirect();
-    header('Location: signin.php');
-  }
 
   $alert = null;
 
   if (!empty($_POST['service_id']) && !empty($_POST['quantity'])) {
+    if (!$_auth->checkSession()) {
+      header('Location: signin.php');
+    }
     $_app = new App(db());
     if (!$_app->reserveService($_POST['service_id'], $_SESSION['user']['uid'], $_POST['quantity'])) {
       $alert['type'] = 'error';

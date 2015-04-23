@@ -6,6 +6,8 @@
   require 'include/config.mailer.php';
   require 'include/PHPMailer/PHPMailerAutoload.php';
 
+  $_auth = new Auth(db());  
+
   $alert = null;
 
   if (!empty($_POST['email-name']) && !empty($_POST['email-name']) && !empty($_POST['email-name'])) {
