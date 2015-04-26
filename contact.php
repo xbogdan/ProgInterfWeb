@@ -6,7 +6,7 @@
   require 'include/config.mailer.php';
   require 'include/PHPMailer/PHPMailerAutoload.php';
 
-  $_auth = new Auth(db());  
+  $_auth = new Auth(db());
 
   $alert = null;
 
@@ -47,7 +47,6 @@
 
     //Set who the message is to be sent from
     $mail->setFrom($_POST['email-email'], $_POST['email-name']);
-
 
     //Set who the message is to be sent to
     $mail->addAddress('bogdan.boamfa.test@gmail.com', 'Boss de boss');

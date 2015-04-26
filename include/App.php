@@ -13,6 +13,31 @@
     }
 
 
+    public function addVisit() {
+      $query = $this->dbh->prepare("SELECT count(*) as nr FROM visits left join visits_ips on (visits.id = visits_ips.visit_id) where visits.day = date(now()) and visits_ips.ip like :ip ");
+      $query->execute(array(':ip' => $_SERVER['REMOTE_ADDR']));
+      $nr = (int)$query->fetch()['nr'];
+      if ($nr <= 0) {
+        $query = $this->dbh->prepare("INSERT INTO visits (day, count) VALUES (date(now()), 1) on duplicate key update count = count+1");
+        $query->execute();
+
+        $query = $this->dbh->prepare("SELECT id, day FROM visits where day = date(now())");
+        $query->execute();
+        $id = $query->fetch()['id'];
+        
+        $query = $this->dbh->prepare("INSERT INTO visits_ips (visit_id, ip) VALUES (?,?)");
+        $query->execute(array($id, $_SERVER['REMOTE_ADDR']));
+      }
+    }
+
+    public function getVisits() {
+      $query = $this->dbh->prepare("SELECT id, day, count FROM visits");
+      $query->execute();
+      $visits = $query->fetchAll();
+      return $visits;
+    }
+
+
     /*
     * Get list of all available services
     */

@@ -12,7 +12,7 @@
     if (!empty($_POST['remember'])) $remember = $_POST['remember'];
     $response = $_auth->login($_POST['email'], $_POST['passwd'], $remember);
     if ($response['error'] == 1) {
-      $alert['type'] = 'success';
+      $alert['type'] = 'error';
       $alert['message'] = $_auth->getErrorMessage($response['message']);
       // echo 'Error login new user';
     } else {
@@ -53,12 +53,12 @@
 
               <div style="margin-bottom: 25px" class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                <input id="login-username" type="text" class="form-control" name="email" value="" placeholder="username or email">
+                <input id="login-username" type="text" class="form-control" name="email" value="<?php echo isset($_POST['email']) ? $_POST['email'] : '' ?>" placeholder="username or email">
               </div>
 
               <div style="margin-bottom: 25px" class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                <input id="login-password" type="password" class="form-control" name="passwd" placeholder="password">
+                <input id="login-password" type="password" class="form-control" name="passwd" placeholder="password" value="<?php echo isset($_POST['passwd']) ? $_POST['passwd'] : '' ?>">
               </div>
 
 

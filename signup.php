@@ -13,7 +13,7 @@
     $response = $_auth->register($_POST['email'], $_POST['passwd'], $_POST['conf-passwd']);
     if ($response['error'] == 1) {
       $alert['type'] = 'error';
-      echo $response['message'];
+      // echo $response['message'];
       $alert['message'] = $_auth->getErrorMessage($response['message']);
     } else {
       $_auth->login($_POST['email'], $_POST['passwd']);
@@ -55,21 +55,21 @@
               <div class="form-group">
                 <label for="email" class="col-md-3 control-label">Email</label>
                 <div class="col-md-9">
-                  <input type="text" class="form-control" name="email" placeholder="Email Address">
+                  <input type="text" class="form-control" name="email" placeholder="Email Address" value="<?php echo isset($_POST['email']) ? $_POST['email'] : '' ?>">
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="password" class="col-md-3 control-label">Password</label>
                 <div class="col-md-9">
-                  <input type="password" class="form-control" name="passwd" placeholder="Password">
+                  <input type="password" class="form-control" name="passwd" placeholder="Password" value="<?php echo isset($_POST['passwd']) ? $_POST['passwd'] : '' ?>">
                 </div>
               </div>
 
               <div class="form-group">
                 <label for="password" class="col-md-3 control-label">Confirm password</label>
                 <div class="col-md-9">
-                  <input type="password" class="form-control" name="conf-passwd" placeholder="Confirm password">
+                  <input type="password" class="form-control" name="conf-passwd" placeholder="Confirm password" value="<?php echo isset($_POST['conf-passwd']) ? $_POST['conf-passwd'] : '' ?>">
                 </div>
               </div>
 

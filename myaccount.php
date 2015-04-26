@@ -25,6 +25,7 @@
       if ($_auth->updateUser($user)) {
         $alert['type'] = 'success';
         $alert['message'] = 'Successfully updated your account informations.';
+        send_sms($user['phone']);
       } else {
         $alert['type'] = 'error';
         $alert['message'] = 'Error ocurred while updating your account informations.';
