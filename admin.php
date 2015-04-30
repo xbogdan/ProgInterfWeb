@@ -55,7 +55,7 @@
     <div class="container">
       <?php showAlert($alert); ?>
       <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-md-12">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
           <h2>Admin Panel</h2>
 
           <a href="addservice.php" class="btn btn-success fright">Add new service</a>
