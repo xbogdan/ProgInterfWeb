@@ -1,4 +1,4 @@
-# ProgInterfWeb
+# Web interfaces course project
 
 Create php mailer config file: include/config.mailer.php
 
